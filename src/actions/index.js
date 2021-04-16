@@ -1,10 +1,5 @@
 import axios from 'axios';
-
-export const FETCH_SMURFS_START = 'FETCH_SMURFS_START';
-export const FETCH_SMURFS_SUCCESS = 'FETCH_SMURFS_SUCCESS';
-export const FETCH_SMURFS_FAILURE = 'FETCH_SMURFS_FAILURE';
-export const ADD_SMURF = 'ADD_SMURF';
-export const FORM_ERROR = 'FORM_ERROR';
+import {FETCH_SMURFS_START, FETCH_SMURFS_SUCCESS, FETCH_SMURFS_FAIL, ADD_SMURF, FORM_ERROR} from '../reducers/index.js'
 
 export const fetchSmurfs = () => {
     return (dispatch) => {
@@ -14,7 +9,7 @@ export const fetchSmurfs = () => {
                 dispatch({type: FETCH_SMURFS_SUCCESS, payload: res.data})
             })
             .catch(err => {
-                dispatch({type: FETCH_SMURFS_FAILURE, payload: 'Uh oh... There was an error!'})
+                dispatch({type: FETCH_SMURFS_FAIL, payload: 'Uh oh... There was an error!'})
             })
     }
 }
