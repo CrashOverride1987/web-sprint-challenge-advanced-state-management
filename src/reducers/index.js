@@ -1,8 +1,61 @@
+import {FETCH_SMURFS_START, FETCH_SMURFS_SUCCESS, FETCH_SMURFS_FAILURE, ADD_SMURF, FORM_ERROR} from '../actions'
 
 export const initialState = {
+    smurfs: [],
+    isLoading: false,
+    errorMessage: ''
 }
 
-const reducer = ()=>{
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case FETCH_SMURFS_START:
+            return ({
+                ...state,
+                isLoading: true,
+                errorMessage: ''
+            })
+
+        case FETCH_SMURFS_SUCCESS:
+            return ({
+                ...state,
+                smurfs: action.payload,
+                isLoading: false,
+                errorMessage: ''
+            })
+
+        case FETCH_SMURFS_FAILURE: 
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload
+            }
+
+        case ADD_SMURF:
+            const newSmurf = {
+                id: state.smurfs.length,
+                name: action.payload.name,
+                position: action.payload.position,
+                nickname: action.payload.nickname,
+                description: action.payload.description
+            }
+        
+            return {
+                ...state,
+                smurfs: [...state.smurfs, newSmurf],
+                isLoading: false,
+                errorMessage: ''
+            }
+
+        case FORM_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload
+            }
+        
+        default:
+            return state;
+    }
 }
 
 export default reducer;
@@ -12,7 +65,6 @@ export default reducer;
 //  - an array of smurfs
 //  - a boolean indicating if the app is loading
 //  - a string indicating a possible error message
-
 //2. Add in the arguments needed to complete a standard reducer function.
 //3. Add in a reducer case to accomidate the start of a smurf fetch.
 //4. Add in a reducer case to accomidate the successful smurf api fetch.
